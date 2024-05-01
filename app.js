@@ -56,7 +56,7 @@ app.use((error, req, res, next) => {
 mongoose
 .connect(`mongodb+srv://${username}:${password}@collab-cluster.yjbgmfd.mongodb.net/${db}?retryWrites=true&w=majority`)
 .then( () => {
-    app.listen(process.env.HTTP_PORT || 5000);
+    app.listen(process.env.HTTP_PORT || 8080);
     //sslServer.listen(process.env.HTTP_PORT || 5000);
 }).catch( err => {
     console.error(err)
