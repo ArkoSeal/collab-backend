@@ -4,26 +4,19 @@ const User = require('./models/user');
 const e = require('cors');
 const HttpError = require('./models/http-error');
 
-// main app
-
-const FACEBOOK_APP_ID = "375320672994034";
-const FACEBOOK_APP_SECRET = "d54dacc4403becd0b2e25a39b79ae9fe";
-
-//test app
-// const FACEBOOK_APP_ID = "779155273845607";
-// const FACEBOOK_APP_SECRET = "e8586d9fe4a5e6942b4e032c76cc0f7e";
-
 module.exports = function () {
   passport.use(new FacebookTokenStrategy({
-      clientID: FACEBOOK_APP_ID,
-      clientSecret: FACEBOOK_APP_SECRET
+      clientID: process.env.FACEBOOK_APP_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      configID: process.env.FACEBOOK_CONFIGURATION_ID,
+      fbGraphVersion: 'v20.0',
+      callbackURL: 'http://localhost:3001/dashboard/'
     },
     async (accessToken, refreshToken, profile, done) => {
       let existingUser;
-     
+      //check if user with this fbId exists in the database
       try {
        existingUser = await User.findOne({'facebookProvider.fbId': profile.id});
- 
         // no user was found, lets create a new one
         if (!existingUser) {
           var newUser = new User({
