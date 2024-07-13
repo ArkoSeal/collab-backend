@@ -5,10 +5,6 @@ const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
-const FACEBOOK_APP_ID = '375320672994034';
-const FACEBOOK_APP_SECRET = 'd54dacc4403becd0b2e25a39b79ae9fe';
-
-
 const login = async (req, res, next) => {
     let token;
     let existingUser;
@@ -16,7 +12,7 @@ const login = async (req, res, next) => {
     console.log(email, accessTokenId);
      
     try {
-        console.log('is existing user?')
+      console.log('is existing user?')
       existingUser = await User.findOne({ email: email });
       console.log('existing user:', existingUser)
     } catch (err) {
